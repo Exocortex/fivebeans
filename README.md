@@ -1,10 +1,6 @@
 A straightforward and (nearly) complete [beanstalkd](http://kr.github.com/beanstalkd/) client for node.js, along with a more opinionated beanstalkd jobs worker & runner.
 
-__Date:__ 5 May 2013
-
-[![build status](https://secure.travis-ci.org/ceejbot/fivebeans.png)](http://travis-ci.org/ceejbot/fivebeans) [![Dependencies](https://david-dm.org/ceejbot/fivebeans.png)](https://david-dm.org/ceejbot/fivebeans)
-
-[![NPM](http://nodei.co/npm/fivebeans.png)](http://nodei.co/npm/fivebeans/)
+[![on npm](http://img.shields.io/npm/v/fivebeans.svg?style=flat)](https://www.npmjs.org/package/fivebeans)  [![Tests](http://img.shields.io/travis/ceejbot/fivebeans.svg?style=flat)](http://travis-ci.org/ceejbot/fivebeans)  ![Coverage](http://img.shields.io/badge/coverage-95%25-green.svg?style=flat)   [![Dependencies](http://img.shields.io/david/ceejbot/fivebeans.svg?style=flat)](https://david-dm.org/ceejbot/fivebeans) ![io.js supported](https://img.shields.io/badge/io.js-supported-green.svg?style=flat)
 
 ## FiveBeansClient
 
@@ -36,7 +32,7 @@ client
     })
     .on('error', function(err)
     {
-        // connection failure    
+        // connection failure
     })
     .on('close', function()
     {
@@ -208,6 +204,7 @@ __host__: beanstalkd host
 __port__: beanstalkd port  
 __handlers__: hash with handler objects, with handler types as keys  
 __ignoreDefault__: true if this worker should ignore the default tube
+__timeout__: timeout parameter used with on reserve_with_timeout, defaults to 10 (in seconds)
 
 #### start
 
@@ -297,7 +294,7 @@ __payload__: job data, in whatever format the job defines
 
 The worker looks up a handler using the given type string and calls work() on the job payload.
 
-The job *may* also be a JSON array containing two items: 
+The job *may* also be a JSON array containing two items:
 
 `[ tubename, jobdata ]`
 
@@ -372,7 +369,7 @@ If the second parameter is an object the actual handlers may optionally be passe
 
 ### bin/beanworker
 
-The above code plus [optimist](https://github.com/substack/node-optimist) wrapped in a node shell script for your convenience.
+The above code plus [yargs](https://github.com/chevex/yargs) wrapped in a node shell script for your convenience.
 
 `bin/beanworker --id=[ID] --config=[config.yml]`
 
@@ -383,7 +380,7 @@ Here's the complete source:
 ```javascript
 #!/usr/bin/env node
 
-var argv = require('optimist')
+var argv = require('yargs')
     .usage('Usage: beanworker --id=[ID] --config=[config.yml]')
     .default('id', 'defaultID')
     .demand(['config'])
@@ -426,9 +423,14 @@ Why yaml not json? Because when I originally wrote this, it was in support of a 
 
 ## Contributors
 
-Many thanks to @AVVS, @crackcomm, and @zr40 for their pull requests.
+@AVVS  
+@crackcomm  
+@zr40  
+Jon Keating
+Jevgenij Tsoi
+
+Many thanks!
 
 ## TODO
 
 * Handle DEADLINE_SOON from the server.
-
